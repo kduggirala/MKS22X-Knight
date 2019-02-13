@@ -174,5 +174,83 @@ public class KnightBoard {
 	or out of bounds.
 	 */
 	public int countSolutions(int startingRow, int startingCol) {}
+	public int countSolutionsHelp(int row, int col, int n) {
+		if (n > r * c) {
+			return 1;
+		}
+		int countSolutions = 0;
+		try {
+			if (movesBoard[row + 1][col + 2] == 0) {
+				movesBoard[r][c] = n;
+				countSolutions += countSolutionsHelp(row + 1, col + 2, n + 1); 
+				movesBoard[r][c] = 0;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row + 1][col - 2] == 0) {
+				movesBoard[r][c] = n;
+				countSolutions += countSolutionsHelp(row + 1, col - 2, n + 1);
+				movesBoard[r][c] = 0;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row + 2][col + 1] == 0) {
+				countSolutions += countSolutionsHelp(row + 2, col + 1, n + 1);
+				movesBoard[r][c] = 0;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row + 2][col - 1] == 0) {
+				movesBoard[r][c] = n;
+				countSolutions += countSolutionsHelp(row + 2, col - 1, n + 1);
+				movesBoard[r][c] = 0;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row - 1][col + 2] == 0) {
+				movesBoard[r][c] = n;
+				countSolutions += countSolutionsHelp(row - 1, col + 2, n + 1);
+				movesBoard[r][c] = 0;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row - 1][col - 2] == 0) {
+				movesBoard[r][c] = n;
+				countSolutions += countSolutionsHelp(row - 1, col - 2, n + 1);
+				movesBoard[r][c] = 0;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row - 2][col + 1] == 0) {
+				movesBoard[r][c] = n;
+				countSolutions += countSolutionsHelp(row - 2, col + 1, n + 1);
+				movesBoard[r][c] = 0;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row - 2][col - 1] == 0) {
+				movesBoard[r][c] = n;
+				countSolutions += countSolutionsHelp(row - 2 , col - 1, n + 1);
+				movesBoard[r][c] = 0;
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		return countSolutions;
+	}
 
 }
