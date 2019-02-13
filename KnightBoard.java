@@ -9,9 +9,9 @@ public class KnightBoard {
 		c = startingCols;
 		board = new Coordinate[r][c];
 		movesBoard = new int[r][c];
-		for (int i  = 0; i < r; i++) {
+		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
-				board[r][c] = new Coordinate(r , c);
+				board[i][j] = new Coordinate(i , j);
 			}
 		}
 	}
@@ -57,17 +57,18 @@ public class KnightBoard {
 		return solveHelp(startingRow, startingCol, 1);	
 	}
 	private boolean solveHelp(int row, int col, int n) {
+		System.out.println(this);
 		if (n > r * c) {
 			return true;
 		}
 		try {
 			if (movesBoard[row + 1][col + 2] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				if (solveHelp(row + 1, col + 2, n + 1)) {
 					return true;
 				}
 				else {
-					movesBoard[r][c] = 0;
+					movesBoard[row][col] = 0;
 				}
 			}
 		}
@@ -75,12 +76,12 @@ public class KnightBoard {
 		}
 		try {
 			if (movesBoard[row + 1][col - 2] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				if (solveHelp(row + 1, col - 2, n + 1)) {
 					return true;
 				}
 				else {
-					movesBoard[r][c] = 0;
+					movesBoard[row][col] = 0;
 				}
 			}
 		}
@@ -88,12 +89,12 @@ public class KnightBoard {
 		}
 		try {
 			if (movesBoard[row + 2][col + 1] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				if (solveHelp(row + 2, col + 1, n + 1)) {
 					return true;
 				}
 				else {
-					movesBoard[r][c] = 0;
+					movesBoard[row][col] = 0;
 				}
 			}
 		}
@@ -101,12 +102,12 @@ public class KnightBoard {
 		}
 		try {
 			if (movesBoard[row + 2][col - 1] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				if (solveHelp(row + 2, col - 1, n + 1)) {
 					return true;
 				}
 				else {
-					movesBoard[r][c] = 0;
+					movesBoard[row][col] = 0;
 				}
 			}
 		}
@@ -114,12 +115,12 @@ public class KnightBoard {
 		}
 		try {
 			if (movesBoard[row - 1][col + 2] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				if (solveHelp(row - 1, col + 2, n + 1)) {
 					return true;
 				}
 				else {
-					movesBoard[r][c] = 0;
+					movesBoard[row][col] = 0;
 				}
 			}
 		}
@@ -127,12 +128,12 @@ public class KnightBoard {
 		}
 		try {
 			if (movesBoard[row - 1][col - 2] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				if (solveHelp(row - 1, col - 2, n + 1)) {
 					return true;
 				}
 				else {
-					movesBoard[r][c] = 0;
+					movesBoard[row][col] = 0;
 				}
 			}
 		}
@@ -140,12 +141,12 @@ public class KnightBoard {
 		}
 		try {
 			if (movesBoard[row - 2][col + 1] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				if (solveHelp(row - 2, col + 1, n + 1)) {
 					return true;
 				}
 				else {
-					movesBoard[r][c] = 0;
+					movesBoard[row][col] = 0;
 				}
 			}
 		}
@@ -153,12 +154,12 @@ public class KnightBoard {
 		}
 		try {
 			if (movesBoard[row - 2][col - 1] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				if (solveHelp(row - 2, col - 1, n + 1)) {
 					return true;
 				}
 				else {
-					movesBoard[r][c] = 0;
+					movesBoard[row][col] = 0;
 				}
 			}
 		}
@@ -173,26 +174,29 @@ public class KnightBoard {
 	@throws IllegalArgumentException when either parameter is negative 
 	or out of bounds.
 	 */
-	public int countSolutions(int startingRow, int startingCol) {}
+	public int countSolutions(int startingRow, int startingCol) {
+		return countSolutionsHelp(startingRow, startingCol, 1);
+	}
 	public int countSolutionsHelp(int row, int col, int n) {
+		
 		if (n > r * c) {
 			return 1;
 		}
 		int countSolutions = 0;
 		try {
 			if (movesBoard[row + 1][col + 2] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				countSolutions += countSolutionsHelp(row + 1, col + 2, n + 1); 
-				movesBoard[r][c] = 0;
+				movesBoard[row][col] = 0;
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row + 1][col - 2] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				countSolutions += countSolutionsHelp(row + 1, col - 2, n + 1);
-				movesBoard[r][c] = 0;
+				movesBoard[row][col] = 0;
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
@@ -200,52 +204,52 @@ public class KnightBoard {
 		try {
 			if (movesBoard[row + 2][col + 1] == 0) {
 				countSolutions += countSolutionsHelp(row + 2, col + 1, n + 1);
-				movesBoard[r][c] = 0;
+				movesBoard[row][col] = 0;
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row + 2][col - 1] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				countSolutions += countSolutionsHelp(row + 2, col - 1, n + 1);
-				movesBoard[r][c] = 0;
+				movesBoard[row][col] = 0;
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row - 1][col + 2] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				countSolutions += countSolutionsHelp(row - 1, col + 2, n + 1);
-				movesBoard[r][c] = 0;
+				movesBoard[row][col] = 0;
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row - 1][col - 2] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				countSolutions += countSolutionsHelp(row - 1, col - 2, n + 1);
-				movesBoard[r][c] = 0;
+				movesBoard[row][col] = 0;
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row - 2][col + 1] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				countSolutions += countSolutionsHelp(row - 2, col + 1, n + 1);
-				movesBoard[r][c] = 0;
+				movesBoard[row][col] = 0;
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row - 2][col - 1] == 0) {
-				movesBoard[r][c] = n;
+				movesBoard[row][col] = n;
 				countSolutions += countSolutionsHelp(row - 2 , col - 1, n + 1);
-				movesBoard[r][c] = 0;
+				movesBoard[row][col] = 0;
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
