@@ -53,8 +53,121 @@ public class KnightBoard {
 	@throws IllegalArgumentException when either parameter is negative 
 	or out of bounds.
 	 */
-	public boolean solve(int startingRow, int startingCol) {}
-
+	public boolean solve(int startingRow, int startingCol) {
+		return solveHelp(startingRow, startingCol, 1);	
+	}
+	private boolean solveHelp(int row, int col, int n) {
+		if (n > r * c) {
+			return true;
+		}
+		try {
+			if (movesBoard[row + 1][col + 2] == 0) {
+				movesBoard[r][c] = n;
+				if (solveHelp(row + 1, col + 2, n + 1)) {
+					return true;
+				}
+				else {
+					movesBoard[r][c] = 0;
+				}
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row + 1][col - 2] == 0) {
+				movesBoard[r][c] = n;
+				if (solveHelp(row + 1, col - 2, n + 1)) {
+					return true;
+				}
+				else {
+					movesBoard[r][c] = 0;
+				}
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row + 2][col + 1] == 0) {
+				movesBoard[r][c] = n;
+				if (solveHelp(row + 2, col + 1, n + 1)) {
+					return true;
+				}
+				else {
+					movesBoard[r][c] = 0;
+				}
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row + 2][col - 1] == 0) {
+				movesBoard[r][c] = n;
+				if (solveHelp(row + 2, col - 1, n + 1)) {
+					return true;
+				}
+				else {
+					movesBoard[r][c] = 0;
+				}
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row - 1][col + 2] == 0) {
+				movesBoard[r][c] = n;
+				if (solveHelp(row - 1, col + 2, n + 1)) {
+					return true;
+				}
+				else {
+					movesBoard[r][c] = 0;
+				}
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row - 1][col - 2] == 0) {
+				movesBoard[r][c] = n;
+				if (solveHelp(row - 1, col - 2, n + 1)) {
+					return true;
+				}
+				else {
+					movesBoard[r][c] = 0;
+				}
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row - 2][col + 1] == 0) {
+				movesBoard[r][c] = n;
+				if (solveHelp(row - 2, col + 1, n + 1)) {
+					return true;
+				}
+				else {
+					movesBoard[r][c] = 0;
+				}
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row - 2][col - 1] == 0) {
+				movesBoard[r][c] = n;
+				if (solveHelp(row - 2, col - 1, n + 1)) {
+					return true;
+				}
+				else {
+					movesBoard[r][c] = 0;
+				}
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		
+		return false;
+		
+	}
 	/**
 	 * @throws IllegalStateException when the board contains non-zero values. 
 	@throws IllegalArgumentException when either parameter is negative 
