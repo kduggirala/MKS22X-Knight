@@ -260,5 +260,23 @@ public class KnightBoard {
 		
 		return countSolutions;
 	}
-
+	public void clearBoard() {
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				movesBoard[i][j] = 0;
+			}
+		}
+	}
+	private boolean isClear() {
+		boolean isEmpty = true;
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				if (movesBoard[i][j] != 0) {
+					isEmpty = false;
+					break;
+				}
+			}
+		}
+		return isEmpty;
+	}
 }
