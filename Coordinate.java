@@ -1,5 +1,5 @@
 
-public class Coordinate {
+public class Coordinate implements Comparable<Coordinate> {
 	private final int x;
 	private final int y;
 	private int possibleMoves;
@@ -24,5 +24,8 @@ public class Coordinate {
 	}
 	public int y() {
 		return y;
+	}
+	public int compareTo(Coordinate otherC) {
+		return (int) Math.signum(possibleMoves - otherC.getPossibleMoves());
 	}
 }

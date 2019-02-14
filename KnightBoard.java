@@ -1,10 +1,10 @@
+import java.util.*;
 public class KnightBoard {
 	private int r;
 	private int c;
 	private Coordinate[][] board; //This board keeps track of the coordinates and how many possible moves from each one
 	private int[][] movesBoard; //This board keeps track of the order of the moves, the board to be printed
 	public KnightBoard(int startingRows,int startingCols) {
-		
 		r = startingRows;
 		c = startingCols;
 		board = new Coordinate[r][c];
@@ -54,7 +54,15 @@ public class KnightBoard {
 	or out of bounds.
 	 */
 	public boolean solve(int startingRow, int startingCol) {
-		movesBoard[startingRow][startingCol] = 1;
+		if (!isClear()) {
+			throw new IllegalStateException();
+		}
+		try {
+			movesBoard[startingRow][startingCol] = 1;
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			throw new IllegalArgumentException();
+		}
 		return solveHelp(startingRow, startingCol, 2);	
 	}
 	private boolean solveHelp(int row, int col, int n) {
@@ -176,8 +184,18 @@ public class KnightBoard {
 	or out of bounds.
 	 */
 	public int countSolutions(int startingRow, int startingCol) {
-		movesBoard[startingRow][startingCol] = 1;
-		return countSolutionsHelp(startingRow, startingCol, 2);
+		if (!isClear()) {
+			throw new IllegalStateException();
+		}
+		try {
+			movesBoard[startingRow][startingCol] = 1;
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			throw new IllegalArgumentException();
+		}
+		int countSolutions = countSolutionsHelp(startingRow, startingCol, 2);
+		clearBoard();
+		return countSolutions;
 	}
 	public int countSolutionsHelp(int row, int col, int n) {
 		if (n > r * c) {
@@ -278,5 +296,57 @@ public class KnightBoard {
 			}
 		}
 		return isEmpty;
+	}
+	private List<Coordinate> getSpaces(int row, int col) {
+		Coordinate c;
+		try {
+			c = board[row][col];
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			throw new IllegalArgumentException();
+		}
+		ArrayList<Coordinate> neighboringSpaces = new ArrayList<Coordinate>();
+		try {
+			neighboringSpaces.add(board[row + 1][col + 2]);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			
+		}
+		try {
+			neighboringSpaces.add(board[row + 1][col - 2]); 
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			neighboringSpaces.add(board[row + 2][col + 1]); 
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			neighboringSpaces.add(board[row + 2][col - 1]);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			neighboringSpaces.add(board[row - 1][col + 2]);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			neighboringSpaces.add(board[row - 1][col - 2]);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			neighboringSpaces.add(board[row - 2][col + 1]);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			neighboringSpaces.add(board[row - 2][col - 1]);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		return neighboringSpaces;
 	}
 }
