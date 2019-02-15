@@ -69,6 +69,7 @@ public class KnightBoard {
 		if (n > r * c) {
 			return true;
 		}
+		for (Coordinate coor : getMovementRange(row, col))
 		try {
 			if (movesBoard[row + 1][col + 2] == 0) {
 				movesBoard[row + 1][col + 2] = n;
@@ -297,10 +298,9 @@ public class KnightBoard {
 		}
 		return isEmpty;
 	}
-	private List<Coordinate> getSpaces(int row, int col) {
-		Coordinate c;
+	private List<Coordinate> getMovementRange(int row, int col) {
 		try {
-			c = board[row][col];
+			Coordinate c = board[row][col];
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 			throw new IllegalArgumentException();
@@ -347,6 +347,20 @@ public class KnightBoard {
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
-		return neighboringSpaces;
+		return sortSpaces(neighboringSpaces);
+	}
+	private List<Coordinate> sortSpaces(List<Coordinate> l) {
+		for (int i = 0; i < l.size(); i++) {
+			Coordinate min = l.get(i);
+			int minIndex = i;
+			for (int j = i; j < l.size(); j++) {
+				if (l.get(j).compareTo(min) < 0) {
+					minIndex = j;
+					min = l.get(j);
+				}
+			}
+			Collections.swap(l, minIndex, i);
+		}
+		return l;
 	}
 }
