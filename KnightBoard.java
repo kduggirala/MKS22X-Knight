@@ -69,113 +69,13 @@ public class KnightBoard {
 		if (n > r * c) {
 			return true;
 		}
-		for (Coordinate coor : getMovementRange(row, col))
-		try {
-			if (movesBoard[row + 1][col + 2] == 0) {
-				movesBoard[row + 1][col + 2] = n;
-				if (solveHelp(row + 1, col + 2, n + 1)) {
-					return true;
-				}
-				else {
-					movesBoard[row + 1][col + 2] = 0;
-				}
+		for (Coordinate coor : getMovementRange(row, col)) {
+			movesBoard[coor.x()][coor.y()] = n;
+			if (solveHelp(coor.x(), coor.y(), n + 1)) {
+				return true;
 			}
+			movesBoard[coor.x()][coor.y()] = 0;
 		}
-		catch (ArrayIndexOutOfBoundsException e) {
-			
-		}
-		try {
-			if (movesBoard[row + 1][col - 2] == 0) {
-				movesBoard[row + 1][col - 2] = n;
-				if (solveHelp(row + 1, col - 2, n + 1)) {
-					return true;
-				}
-				else {
-					movesBoard[row + 1][col - 2] = 0;
-				}
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row + 2][col + 1] == 0) {
-				movesBoard[row + 2][col + 1] = n;
-				if (solveHelp(row + 2, col + 1, n + 1)) {
-					return true;
-				}
-				else {
-					movesBoard[row + 2][col + 1] = 0;
-				}
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row + 2][col - 1] == 0) {
-				movesBoard[row + 2][col - 1] = n;
-				if (solveHelp(row + 2, col - 1, n + 1)) {
-					return true;
-				}
-				else {
-					movesBoard[row + 2][col - 1] = 0;
-				}
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row - 1][col + 2] == 0) {
-				movesBoard[row - 1][col + 2]  = n;
-				if (solveHelp(row - 1, col + 2, n + 1)) {
-					return true;
-				}
-				else {
-					movesBoard[row - 1][col + 2] = 0;
-				}
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row - 1][col - 2] == 0) {
-				movesBoard[row - 1][col - 2] = n;
-				if (solveHelp(row - 1, col - 2, n + 1)) {
-					return true;
-				}
-				else {
-					movesBoard[row - 1][col - 2] = 0;
-				}
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row - 2][col + 1] == 0) {
-				movesBoard[row - 2][col + 1] = n;
-				if (solveHelp(row - 2, col + 1, n + 1)) {
-					return true;
-				}
-				else {
-					movesBoard[row - 2][col + 1] = 0;
-				}
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row - 2][col - 1] == 0) {
-				movesBoard[row - 2][col - 1] = n;
-				if (solveHelp(row - 2, col - 1, n + 1)) {
-					return true;
-				}
-				else {
-					movesBoard[row - 2][col - 1] = 0;
-				}
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		
 		return false;
 		
 	}
@@ -307,44 +207,55 @@ public class KnightBoard {
 		}
 		ArrayList<Coordinate> neighboringSpaces = new ArrayList<Coordinate>();
 		try {
-			neighboringSpaces.add(board[row + 1][col + 2]);
+			if (movesBoard[row + 1][col + 2] == 0) {
+				neighboringSpaces.add(board[row + 1][col + 2]);
+			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 			
 		}
 		try {
+			if (movesBoard[row + 1][col - 2] == 0) {
 			neighboringSpaces.add(board[row + 1][col - 2]); 
+		}}
+		catch (ArrayIndexOutOfBoundsException e) {
+		}
+		try {
+			if (movesBoard[row + 2][col + 1] == 0) {
+				neighboringSpaces.add(board[row + 2][col + 1]); 
+			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			neighboringSpaces.add(board[row + 2][col + 1]); 
+			if (movesBoard[row + 2][col - 1] == 0) {
+				neighboringSpaces.add(board[row + 2][col - 1]);
+			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			neighboringSpaces.add(board[row + 2][col - 1]);
-		}
+			if (movesBoard[row - 1][col + 2] == 0) {
+				neighboringSpaces.add(board[row - 1][col + 2]);
+		}}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			neighboringSpaces.add(board[row - 1][col + 2]);
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
+			if (movesBoard[row - 1][col - 2] == 0) {
 			neighboringSpaces.add(board[row - 1][col - 2]);
-		}
+		}}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
+			if (movesBoard[row - 2][col + 1] == 0) {
 			neighboringSpaces.add(board[row - 2][col + 1]);
-		}
+		}}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
+			if (movesBoard[row - 2][col - 1] == 0) {
 			neighboringSpaces.add(board[row - 2][col - 1]);
-		}
+		}}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		return sortSpaces(neighboringSpaces);
