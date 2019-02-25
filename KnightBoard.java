@@ -2,8 +2,11 @@ import java.util.*;
 public class KnightBoard {
 	private int r;
 	private int c;
-	private Coordinate[][] board; //This board keeps track of the coordinates and how many possible moves from each one
+	private boolean unsolveable;
+	Coordinate[][] board; //This board keeps track of the coordinates and how many possible moves from each one
 	private int[][] movesBoard; //This board keeps track of the order of the moves, the board to be printed
+
+	//Initialize the board to the correct size and make them all 0's 
 	public KnightBoard(int startingRows,int startingCols) {
 		r = startingRows;
 		c = startingCols;
@@ -14,20 +17,60 @@ public class KnightBoard {
 				board[i][j] = new Coordinate(i , j);
 			}
 		}
+		setupBoard();
 	}
 
-	//Initialize the board to the correct size and make them all 0's 
 
-
+	private void setupBoard() {
+		if (r < 3 || c < 3) {
+			unsolveable = true;
+		}
+		else {
+			for (int i = 0; i < r; i++) {
+				for (int j = 0; j < c; j++) {
+					if (i == 0 || i == r - 1) {
+						if (j == 0 || j == c - 1) {
+							board[i][j].setPossibleMoves(2);
+						}
+						if (j == 1 || j == c - 2) {
+							board[i][j].setPossibleMoves(3);
+						}
+						else {
+							board[i][j].setPossibleMoves(4);
+						}
+					}
+					if (i == 1 || i == r - 2) {
+						if (j == 0 || j == c - 1) {
+							board[i][j].setPossibleMoves(4);
+						}
+						else {
+							board[i][j].setPossibleMoves(6);
+						}
+					}
+					else {
+						if (j == 0 || j == c - 1) {
+							board[i][j].setPossibleMoves(4);
+						}
+						if (j == 1 || j == c - 2) {
+							board[i][j].setPossibleMoves(6);
+						}
+						else {
+							board[i][j].setPossibleMoves(8);
+						}
+					}
+				}
+			}
+		}
+	}
 	/*blank boards display 0's as underscores 
 	  you get a blank board if you never called solve or 
 	  when there is no solution
-	*/ 
+	 */ 
 	public String toString() {
 		StringBuffer boardString = new StringBuffer();
 		for (int[] r : movesBoard) {
 			for (int i : r) {
-			
+
 				if (i < 10) {
 					boardString.append(" ");
 					if (i == 0) {
@@ -46,7 +89,7 @@ public class KnightBoard {
 		}
 		return boardString.toString();
 	}
-	
+
 
 	/**
 	@throws IllegalStateException when the board contains non-zero values.
@@ -56,6 +99,9 @@ public class KnightBoard {
 	public boolean solve(int startingRow, int startingCol) {
 		if (!isClear()) {
 			throw new IllegalStateException();
+		}
+		if (unsolveable) {
+			return false;
 		}
 		try {
 			movesBoard[startingRow][startingCol] = 1;
@@ -69,15 +115,29 @@ public class KnightBoard {
 		if (n > r * c) {
 			return true;
 		}
-		for (Coordinate coor : getMovementRange(row, col)) {
-			movesBoard[coor.x()][coor.y()] = n;
+		List<Coordinate> movementRange = getMovementRange(row, col);
+		sortSpaces(movementRange);
+		for (Coordinate coor : movementRange) {
+			addKnight(coor.x(), coor.y(), n);
 			if (solveHelp(coor.x(), coor.y(), n + 1)) {
 				return true;
 			}
-			movesBoard[coor.x()][coor.y()] = 0;
+			removeKnight(coor.x(), coor.y());
 		}
 		return false;
-		
+
+	}
+	private void addKnight(int row, int col, int n) {
+		movesBoard[row][col] = n;
+		for (Coordinate coor : getMovementRange(row, col)) {
+			coor.decrementPossibleMoves();
+		}
+	}
+	private void removeKnight(int row, int col) {
+		movesBoard[row][col] = 0;
+		for (Coordinate coor : getMovementRange(row, col)) {
+			coor.incrementPossibleMoves();
+		}
 	}
 	/**
 	 * @throws IllegalStateException when the board contains non-zero values. 
@@ -111,7 +171,7 @@ public class KnightBoard {
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
-			
+
 		}
 		try {
 			if (movesBoard[row + 1][col - 2] == 0) {
@@ -176,7 +236,7 @@ public class KnightBoard {
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
-		
+
 		return countSolutions;
 	}
 	public void clearBoard() {
@@ -212,12 +272,13 @@ public class KnightBoard {
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
-			
+
 		}
 		try {
 			if (movesBoard[row + 1][col - 2] == 0) {
-			neighboringSpaces.add(board[row + 1][col - 2]); 
-		}}
+				neighboringSpaces.add(board[row + 1][col - 2]); 
+			}
+		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
@@ -237,30 +298,34 @@ public class KnightBoard {
 		try {
 			if (movesBoard[row - 1][col + 2] == 0) {
 				neighboringSpaces.add(board[row - 1][col + 2]);
-		}}
+			}
+		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row - 1][col - 2] == 0) {
-			neighboringSpaces.add(board[row - 1][col - 2]);
-		}}
+				neighboringSpaces.add(board[row - 1][col - 2]);
+			}
+		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row - 2][col + 1] == 0) {
-			neighboringSpaces.add(board[row - 2][col + 1]);
-		}}
+				neighboringSpaces.add(board[row - 2][col + 1]);
+			}
+		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row - 2][col - 1] == 0) {
-			neighboringSpaces.add(board[row - 2][col - 1]);
-		}}
+				neighboringSpaces.add(board[row - 2][col - 1]);
+			}
+		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
-		return sortSpaces(neighboringSpaces);
+		return neighboringSpaces;
 	}
-	private List<Coordinate> sortSpaces(List<Coordinate> l) {
+	private void sortSpaces(List<Coordinate> l) {
 		for (int i = 0; i < l.size(); i++) {
 			Coordinate min = l.get(i);
 			int minIndex = i;
@@ -272,6 +337,5 @@ public class KnightBoard {
 			}
 			Collections.swap(l, minIndex, i);
 		}
-		return l;
 	}
 }
