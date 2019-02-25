@@ -151,6 +151,9 @@ public class KnightBoard {
 		if (!isClear()) {
 			throw new IllegalStateException();
 		}
+		if (unsolveable) {
+			return 0;
+		}
 		try {
 			movesBoard[startingRow][startingCol] = 1;
 		}
@@ -166,80 +169,12 @@ public class KnightBoard {
 			return 1;
 		}
 		int countSolutions = 0;
-		try {
-			if (movesBoard[row + 1][col + 2] == 0) {
-				movesBoard[row + 1][col + 2] = n;
-				countSolutions += countSolutionsHelp(row + 1, col + 2, n + 1);
-				movesBoard[row + 1][col + 2] = 0;
-			}
+		List<Coordinate> movementRange = getMovementRange(row, col);
+		for (Coordinate coor : movementRange) {
+			addKnight(coor.x(), coor.y(), n);
+			countSolutions += countSolutionsHelp(coor.x(), coor.y(), n + 1);
+			removeKnight(coor.x(), coor.y());
 		}
-		catch (ArrayIndexOutOfBoundsException e) {
-
-		}
-		try {
-			if (movesBoard[row + 1][col - 2] == 0) {
-				movesBoard[row + 1][col - 2] = n;
-				countSolutions += countSolutionsHelp(row + 1, col - 2, n + 1);
-				movesBoard[row + 1][col - 2] = 0;
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row + 2][col + 1] == 0) {
-				movesBoard[row + 2][col + 1] = n;
-				countSolutions += countSolutionsHelp(row + 2, col + 1, n + 1);
-				movesBoard[row + 2][col + 1] = 0;
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row + 2][col - 1] == 0) {
-				movesBoard[row + 2][col - 1] = n;
-				countSolutions += countSolutionsHelp(row + 2, col - 1, n + 1);
-				movesBoard[row + 2][col - 1] = 0;
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row - 1][col + 2] == 0) {
-				movesBoard[row - 1][col + 2] = n;
-				countSolutions += countSolutionsHelp(row - 1, col + 2, n + 1);
-				movesBoard[row - 1][col + 2] = 0;
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row - 1][col - 2] == 0) {
-				movesBoard[row - 1][col - 2] = n;
-				countSolutions += countSolutionsHelp(row - 1, col - 2, n + 1);
-				movesBoard[row - 1][col - 2] = 0;
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row - 2][col + 1] == 0) {
-				movesBoard[row - 2][col + 1] = n;
-				countSolutions += countSolutionsHelp(row - 2, col + 1, n + 1);
-				movesBoard[row - 2][col + 1] = 0;
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-		try {
-			if (movesBoard[row - 2][col - 1] == 0) {
-				movesBoard[row - 2][col - 1] = n;
-				countSolutions += countSolutionsHelp(row - 2, col - 1, n + 1);
-				movesBoard[row - 2][col - 1] = 0;
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-		}
-
 		return countSolutions;
 	}
 	public void clearBoard() {
