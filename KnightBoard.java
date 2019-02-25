@@ -32,15 +32,18 @@ public class KnightBoard {
 						if (j == 0 || j == c - 1) {
 							board[i][j].setPossibleMoves(2);
 						}
-						if (j == 1 || j == c - 2) {
+						else if (j == 1 || j == c - 2) {
 							board[i][j].setPossibleMoves(3);
 						}
 						else {
 							board[i][j].setPossibleMoves(4);
 						}
 					}
-					if (i == 1 || i == r - 2) {
+					else if (i == 1 || i == r - 2) {
 						if (j == 0 || j == c - 1) {
+							board[i][j].setPossibleMoves(3);
+						}
+						else if (j == 1 || j == c - 2) {
 							board[i][j].setPossibleMoves(4);
 						}
 						else {
@@ -51,7 +54,7 @@ public class KnightBoard {
 						if (j == 0 || j == c - 1) {
 							board[i][j].setPossibleMoves(4);
 						}
-						if (j == 1 || j == c - 2) {
+						else if (j == 1 || j == c - 2) {
 							board[i][j].setPossibleMoves(6);
 						}
 						else {
