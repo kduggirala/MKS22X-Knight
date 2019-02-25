@@ -26,6 +26,6 @@ public class Coordinate implements Comparable<Coordinate> {
 		return y;
 	}
 	public int compareTo(Coordinate otherC) {
-		return (int) Math.signum(otherC.getPossibleMoves() - possibleMoves);
+		return (int) Math.signum(possibleMoves - otherC.getPossibleMoves());
 	}
 }
