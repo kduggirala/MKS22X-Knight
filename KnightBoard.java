@@ -177,6 +177,7 @@ public class KnightBoard {
 		}
 		return countSolutions;
 	}
+	//sets the board to all zeros
 	public void clearBoard() {
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
@@ -184,6 +185,7 @@ public class KnightBoard {
 			}
 		}
 	}
+	//returns whether the board is all zeros
 	private boolean isClear() {
 		boolean isEmpty = true;
 		for (int i = 0; i < r; i++) {
@@ -196,6 +198,7 @@ public class KnightBoard {
 		}
 		return isEmpty;
 	}
+	//returns list of coordinates that are within movement range of the space at row, col
 	private List<Coordinate> getMovementRange(int row, int col) {
 		try {
 			Coordinate c = board[row][col];
@@ -263,6 +266,7 @@ public class KnightBoard {
 		}
 		return neighboringSpaces;
 	}
+	//sorts spaces with selection sort by number of outgoing moves
 	private void sortSpaces(List<Coordinate> l) {
 		for (int i = 0; i < l.size(); i++) {
 			Coordinate min = l.get(i);
