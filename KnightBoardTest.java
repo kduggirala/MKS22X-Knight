@@ -1,8 +1,11 @@
 
 public class KnightBoardTest {
 	public static void main(String[] args) {
-		for (int i = 0; i < 5; i++) {
-			runTest(i);
+		for (int i = 5; i < 100; i++) {
+			KnightBoard k = new KnightBoard(i, i);
+			k.solve(0, 0);
+			System.out.println(i);
+			System.out.println(k);
 		}
 	}
 	//testcase must be a valid index of your input/output array

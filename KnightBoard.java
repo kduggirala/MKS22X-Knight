@@ -3,10 +3,10 @@ public class KnightBoard {
 	private int r;
 	private int c;
 	private boolean unsolveable;
-	Coordinate[][] board; //This board keeps track of the coordinates and how many possible moves from each one
+	private Coordinate[][] board; //This board keeps track of the coordinates and how many possible moves from each one
 	private int[][] movesBoard; //This board keeps track of the order of the moves, the board to be printed
 
-	//Initialize the board to the correct size and make them all 0's 
+	//Initialize the board to the correct size and make them all 0's
 	public KnightBoard(int startingRows,int startingCols) {
 		r = startingRows;
 		c = startingCols;
@@ -65,10 +65,10 @@ public class KnightBoard {
 			}
 		}
 	}
-	/*blank boards display 0's as underscores 
-	  you get a blank board if you never called solve or 
+	/*blank boards display 0's as underscores
+	  you get a blank board if you never called solve or
 	  when there is no solution
-	 */ 
+	 */
 	public String toString() {
 		StringBuffer boardString = new StringBuffer();
 		for (int[] r : movesBoard) {
@@ -96,7 +96,7 @@ public class KnightBoard {
 
 	/**
 	@throws IllegalStateException when the board contains non-zero values.
-	@throws IllegalArgumentException when either parameter is negative 
+	@throws IllegalArgumentException when either parameter is negative
 	or out of bounds.
 	 */
 	public boolean solve(int startingRow, int startingCol) {
@@ -112,7 +112,7 @@ public class KnightBoard {
 		catch(ArrayIndexOutOfBoundsException e) {
 			throw new IllegalArgumentException();
 		}
-		return solveHelp(startingRow, startingCol, 2);	
+		return solveHelp(startingRow, startingCol, 2);
 	}
 	private boolean solveHelp(int row, int col, int n) {
 		if (n > r * c) {
@@ -143,8 +143,8 @@ public class KnightBoard {
 		}
 	}
 	/**
-	 * @throws IllegalStateException when the board contains non-zero values. 
-	@throws IllegalArgumentException when either parameter is negative 
+	 * @throws IllegalStateException when the board contains non-zero values.
+	@throws IllegalArgumentException when either parameter is negative
 	or out of bounds.
 	 */
 	public int countSolutions(int startingRow, int startingCol) {
@@ -217,14 +217,14 @@ public class KnightBoard {
 		}
 		try {
 			if (movesBoard[row + 1][col - 2] == 0) {
-				neighboringSpaces.add(board[row + 1][col - 2]); 
+				neighboringSpaces.add(board[row + 1][col - 2]);
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
 			if (movesBoard[row + 2][col + 1] == 0) {
-				neighboringSpaces.add(board[row + 2][col + 1]); 
+				neighboringSpaces.add(board[row + 2][col + 1]);
 			}
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
